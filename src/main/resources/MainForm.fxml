@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" vgap="10" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainFormController">
+<GridPane hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFormController">
    <children>
       <AnchorPane prefHeight="1235.0" prefWidth="2229.0">
          <children>
@@ -184,7 +184,7 @@
                               <JFXTreeTableView layoutX="14.0" layoutY="80.0" prefHeight="683.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
                                  <columns>
                                     <TreeTableColumn prefWidth="341.0" text="Инструмент" />
-                                    <TreeTableColumn maxWidth="2000.0" minWidth="0.0" prefWidth="137.0" text="Серийный номер" />
+                                    <TreeTableColumn maxWidth="2000.0" minWidth="0.0" prefWidth="136.0" text="Серийный номер" />
                                     <TreeTableColumn maxWidth="1000.0" prefWidth="75.0" text="4 часа" />
                                     <TreeTableColumn maxWidth="1000.0" prefWidth="75.0" text="8 часов" />
                                     <TreeTableColumn maxWidth="1000.0" prefWidth="75.0" text="1 сутки" />

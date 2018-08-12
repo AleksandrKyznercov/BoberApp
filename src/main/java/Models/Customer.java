@@ -1,4 +1,4 @@
-package sample.Models;
+package Models;
 
 public class Customer {
     private int ID;

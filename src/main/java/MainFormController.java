@@ -1,5 +1,3 @@
-package sample;
-
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
@@ -17,8 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import sample.Models.Tool;
-import sample.TableModels.ToolTableModel;
+import org.hibernate.Session;
+import DAO.HibernateSessionFactory;
+import Models.Tool;
+import TableModels.ToolTableModel;
+import hibernate.dao.EquipmentEntity;
 
 public class MainFormController {
 
@@ -79,7 +80,7 @@ public class MainFormController {
 
     @FXML
     public void addEquipmentInTable(){
-        ToolTableModel tableItem = new ToolTableModel();
+        /*ToolTableModel tableItem = new ToolTableModel();
         //if () !!! Добавить проверку на пустые значения
         for (Tool tool:data) {
             if (tool.getName().equals(equipmentBox.getSelectionModel().getSelectedItem().toString())){
@@ -108,6 +109,16 @@ public class MainFormController {
         }
         tableItem.setPrice(Math.round(tableItem.getPrice()));
         tableItem.setCommonPrice(Math.round(tableItem.getCommonPrice()));
-        tableData.add(tableItem);
+        tableData.add(tableItem);*/
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+
+        session.beginTransaction();
+
+        EquipmentEntity equipmentEntity = new EquipmentEntity();
+
+        equipmentEntity = session.load(EquipmentEntity.class,1);
+
+        session.close();
+        System.out.println(equipmentEntity.getName());
     }
 }

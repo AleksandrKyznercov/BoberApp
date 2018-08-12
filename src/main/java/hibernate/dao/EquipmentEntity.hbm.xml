@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="hibernate.dao.EquipmentEntity" table="equipment" schema="bober">
+        <id name="idEquipment">
+            <column name="ID_Equipment" sql-type="int(11)"/>
+        </id>
+        <property name="name">
+            <column name="Name" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="serialNumber">
+            <column name="SerialNumber" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="cost">
+            <column name="Cost" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="deposit">
+            <column name="Deposit" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="defenition">
+            <column name="Defenition" sql-type="text" not-null="true"/>
+        </property>
+        <property name="priceFor4">
+            <column name="PriceFor4" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="priceFor8">
+            <column name="PriceFor8" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="priceFor24">
+            <column name="PriceFor24" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="remark">
+            <column name="Remark" sql-type="text" not-null="true"/>
+        </property>
+        <property name="status">
+            <column name="Status" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

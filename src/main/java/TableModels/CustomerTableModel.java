@@ -1,4 +1,4 @@
-package sample.TableModels;
+package TableModels;
 
 public class CustomerTableModel {
 
