@@ -1,5 +1,8 @@
+import TableModels.EquipmentTableModel;
+import TableModels.ToolTableModel;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTreeTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,19 +19,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import org.hibernate.Session;
-import DAO.HibernateSessionFactory;
 import Models.Tool;
-import TableModels.ToolTableModel;
 import hibernate.dao.EquipmentEntity;
 
 public class MainFormController {
 
     public JFXComboBox timeBox;
-    public TableColumn table1Name,table1Period,table1Price,table1Common;
+    //---- table Equipment ------
+    public TableColumn tableEquipmentName,tableEquipmentSerialNumber,tableEquipmentPrice4, tableEquipmentPrice8,tableEquipmentPrice24,tableEquipmentDeposit, tableEquipmentStatus;
+    //---------------------------
     public TreeTableColumn tableClientsFIO, tableClientsSerial, tableClientsNumber, tableClientsVidan,  tableClientsAdress, tableClientsFactAdress, tableClientsPhone;
-    public TableView tableTreaty;
+    public TableView tableEquipment;
 
     private ObservableList<ToolTableModel> tableData = FXCollections.observableArrayList();
+    private ObservableList<EquipmentTableModel> tableEquipmentData = FXCollections.observableArrayList();
     private ObservableList<Tool> data = FXCollections.observableArrayList();
     private ObservableList<String> dataComboBox = FXCollections.observableArrayList();
 
@@ -39,7 +43,6 @@ public class MainFormController {
 
         VBoxCell(String labelText, String labelText2, Color circleColor) {
             super();
-
             label1.setText(labelText);
             label2.setText(labelText2);
             label1.setFont(Font.font(14));
@@ -61,19 +64,35 @@ public class MainFormController {
 
     @FXML
     public void initialize() {
-        table1Name.setCellValueFactory(new PropertyValueFactory<ToolTableModel,String>("name"));
-        table1Period.setCellValueFactory(new PropertyValueFactory<ToolTableModel,String>("period"));
-        table1Price.setCellValueFactory(new PropertyValueFactory<ToolTableModel,String>("price"));
-        table1Common.setCellValueFactory(new PropertyValueFactory<ToolTableModel,String>("commonPrice"));
-        tableTreaty.setItems(tableData);
+        tableEquipmentName.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,String>("name"));
+        tableEquipmentSerialNumber.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,String>("serialNumber"));
+        tableEquipmentPrice4.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("priceFor4"));
+        tableEquipmentPrice8.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("priceFor8"));
+        tableEquipmentPrice24.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("priceFor24"));
+        tableEquipmentDeposit.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("deposit"));
+        tableEquipmentStatus.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,String>("status"));
+        //tableTreaty.setItems(tableData);
 
         timeBox.setItems(FXCollections.observableArrayList(
                 "4 часа","8 часов","1 сутки","2 суток","3 суток","4 суток","5 суток","6 суток","7 суток",
                 "8 суток","9 суток","10 суток","11 суток","12 суток","13 суток","14 суток","15 суток","16 суток","17 суток",
                 "18 суток","19 суток","20 суток","21 сутоки","22 суток","23 суток","24 суток","25 суток","26 суток","27 суток",
-                "28 суток","29 суток","30 суток","31 сутоки"
+                "28 суток","29 суток","30 суток","31 сутrи"
         ));
         //equipmentBox.setItems(dataComboBox);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+
+        session.beginTransaction();
+
+        EquipmentEntity equipmentEntity = new EquipmentEntity();
+
+        equipmentEntity = session.load(EquipmentEntity.class,1);
+        tableEquipmentData = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).list());
+        //tableEquipmentData.add(new EquipmentTableModel(equipmentEntity));
+        System.out.println(equipmentEntity.getName());
+
+        tableEquipment.setItems(tableEquipmentData);
+        session.close();
 
         listView.getItems().add(new VBoxCell("Договор №1","Договор №2",Color.valueOf("#ff3b3b")));
     }
@@ -117,8 +136,8 @@ public class MainFormController {
         EquipmentEntity equipmentEntity = new EquipmentEntity();
 
         equipmentEntity = session.load(EquipmentEntity.class,1);
-
-        session.close();
         System.out.println(equipmentEntity.getName());
+        session.close();
+
     }
 }

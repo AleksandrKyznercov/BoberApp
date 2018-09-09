@@ -1,8 +1,9 @@
 package TableModels;
 
-public class ToolTableModel  {
+public class ToolTableModel {
 
     private String Name;
+    private String SerialNumber;
     private String Period;
     private double Price;
     private double CommonPrice;
