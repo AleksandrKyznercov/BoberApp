@@ -134,7 +134,7 @@
                                                 <Font name="Calibri Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <JFXComboBox fx:id="rentTimeCombo11" editable="true" labelFloat="true" layoutX="14.0" layoutY="388.0" prefHeight="19.0" prefWidth="362.0" promptText="Инструмент" />
+                                          <JFXComboBox fx:id="toolSelector" editable="true" labelFloat="true" layoutX="14.0" layoutY="388.0" prefHeight="19.0" prefWidth="362.0" promptText="Инструмент" />
                                           <TableView layoutX="14.0" layoutY="79.0" prefHeight="300.0" prefWidth="835.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
                                             <columns>
                                               <TableColumn prefWidth="488.0" text="Инструмент" />

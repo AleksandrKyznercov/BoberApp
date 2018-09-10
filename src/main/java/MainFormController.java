@@ -21,10 +21,12 @@ import javafx.scene.text.Font;
 import org.hibernate.Session;
 import Models.Tool;
 import hibernate.dao.EquipmentEntity;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 
 public class MainFormController {
 
-    public JFXComboBox timeBox;
+    public JFXComboBox toolSelector,timeBox;
     //---- table Equipment ------
     public TableColumn tableEquipmentName,tableEquipmentSerialNumber,tableEquipmentPrice4, tableEquipmentPrice8,tableEquipmentPrice24,tableEquipmentDeposit, tableEquipmentStatus;
     //---------------------------
@@ -87,11 +89,13 @@ public class MainFormController {
         EquipmentEntity equipmentEntity = new EquipmentEntity();
 
         equipmentEntity = session.load(EquipmentEntity.class,1);
-        tableEquipmentData = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).list());
+        tableEquipmentData = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());
+
         //tableEquipmentData.add(new EquipmentTableModel(equipmentEntity));
-        System.out.println(equipmentEntity.getName());
+        //System.out.println(equipmentEntity.getName());
 
         tableEquipment.setItems(tableEquipmentData);
+        toolSelector.setItems(FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).setProjection(Projections.property("name")).addOrder(Order.asc("name")).list()));
         session.close();
 
         listView.getItems().add(new VBoxCell("Договор №1","Договор №2",Color.valueOf("#ff3b3b")));
@@ -129,7 +133,7 @@ public class MainFormController {
         tableItem.setPrice(Math.round(tableItem.getPrice()));
         tableItem.setCommonPrice(Math.round(tableItem.getCommonPrice()));
         tableData.add(tableItem);*/
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        /*Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
         session.beginTransaction();
 
@@ -138,6 +142,11 @@ public class MainFormController {
         equipmentEntity = session.load(EquipmentEntity.class,1);
         System.out.println(equipmentEntity.getName());
         session.close();
+*/
+    }
 
+    public void getNameFromTable(){
+        EquipmentTableModel equipmentTableModel = (EquipmentTableModel) tableEquipment.getSelectionModel().getSelectedItem();
+        System.out.println(equipmentTableModel.getName());
     }
 }

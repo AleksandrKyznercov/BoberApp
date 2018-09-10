@@ -1,4 +1,4 @@
-CREATE TABLE Customer(
+﻿CREATE TABLE Customer(
        ID_Customer      INTEGER AUTO_INCREMENT PRIMARY KEY,
        FIO			    VARCHAR(220),
        passSerialNumber VARCHAR(220),
@@ -22,6 +22,20 @@ CREATE TABLE Аction(
 	   ID_Equipment		INTEGER,
 	   ID_Treaty		INTEGER,
 	   Cost				FLOAT,
-	   RentTime			VARCHAR(20),
+	   RentTime			VARCHAR(20)
 	   
+) ENGINE = MYISAM;
+
+CREATE TABLE Equipment(
+       ID_Equipment		INTEGER AUTO_INCREMENT PRIMARY KEY,
+       Name 			VARCHAR(220),
+       SerialNumber		VARCHAR(220),
+       Cost				INTEGER,
+       Deposit			INTEGER,
+	   Defenition		VARCHAR(550),
+	   PriceFor4		INTEGER,
+	   PriceFor8		INTEGER,
+	   PriceFor24		INTEGER,
+	   Remark 			VARCHAR(220),
+	   Status 			VARCHAR(220)
 ) ENGINE = MYISAM;

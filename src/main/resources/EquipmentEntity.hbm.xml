@@ -4,12 +4,12 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="hibernate.dao.EquipmentEntity" table="equipment" schema="bober">
+    <class name="hibernate.dao.EquipmentEntity" table="equipment" schema="bober_app_db">
         <id name="idEquipment">
             <column name="ID_Equipment" sql-type="int(11)"/>
         </id>
         <property name="name">
-            <column name="Name" sql-type="varchar(200)" length="200" not-null="true"/>
+            <column name="Name" sql-type="varchar(220)" length="200" not-null="true"/>
         </property>
         <property name="serialNumber">
             <column name="SerialNumber" sql-type="varchar(200)" length="200" not-null="true"/>

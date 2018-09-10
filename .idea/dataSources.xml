@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bober@localhost" uuid="44a867cc-7a9e-4143-aa76-36de1606c3f0">
+    <data-source source="LOCAL" name="bober_app_db@localhost" uuid="44a867cc-7a9e-4143-aa76-36de1606c3f0">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/bober</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/bober_app_db</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
