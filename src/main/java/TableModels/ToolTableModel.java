@@ -9,6 +9,10 @@ public class ToolTableModel {
     private double CommonPrice;
 
     public ToolTableModel() {
+        Name = null;
+        Period = null;
+        Price = 0;
+        CommonPrice = 0;
     }
 
     public ToolTableModel(String name, String period, double price, double commonPrice) {

@@ -35,7 +35,7 @@ public class MainFormController {
 
     private ObservableList<ToolTableModel> tableData = FXCollections.observableArrayList();
     private ObservableList<EquipmentTableModel> tableEquipmentData = FXCollections.observableArrayList();
-    private ObservableList<Tool> data = FXCollections.observableArrayList();
+    private ObservableList<EquipmentEntity> data = FXCollections.observableArrayList();
     private ObservableList<String> dataComboBox = FXCollections.observableArrayList();
 
     public static class VBoxCell extends VBox {
@@ -90,7 +90,7 @@ public class MainFormController {
 
         equipmentEntity = session.load(EquipmentEntity.class,1);
         tableEquipmentData = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());
-
+        data = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());
         //tableEquipmentData.add(new EquipmentTableModel(equipmentEntity));
         //System.out.println(equipmentEntity.getName());
 
@@ -103,10 +103,10 @@ public class MainFormController {
 
     @FXML
     public void addEquipmentInTable(){
-        /*ToolTableModel tableItem = new ToolTableModel();
+        ToolTableModel tableItem = new ToolTableModel();
         //if () !!! Добавить проверку на пустые значения
-        for (Tool tool:data) {
-            if (tool.getName().equals(equipmentBox.getSelectionModel().getSelectedItem().toString())){
+        for (EquipmentEntity tool:data) {
+            if (tool.getName().equals(toolSelector.getSelectionModel().getSelectedItem().toString())){
                 tableItem.setName(tool.getName());
                 tableItem.setPeriod(timeBox.getSelectionModel().getSelectedItem().toString());
                 if (timeBox.getSelectionModel().getSelectedIndex() == 0){
@@ -128,11 +128,13 @@ public class MainFormController {
                     tableItem.setPrice(tool.getPriceFor24()*0.55);
                     tableItem.setCommonPrice(tableItem.getPrice() * (timeBox.getSelectionModel().getSelectedIndex() - 1));
                 }
+                break;
             }
         }
         tableItem.setPrice(Math.round(tableItem.getPrice()));
         tableItem.setCommonPrice(Math.round(tableItem.getCommonPrice()));
-        tableData.add(tableItem);*/
+        tableData.add(tableItem);
+
         /*Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
         session.beginTransaction();
