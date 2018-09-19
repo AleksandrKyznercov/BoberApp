@@ -1,10 +1,15 @@
+import DAO.CustomerService;
+import TableModels.CustomerTableModel;
 import TableModels.EquipmentTableModel;
 import TableModels.ToolTableModel;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
+import hibernate.dao.CustomerEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -21,22 +26,29 @@ import javafx.scene.text.Font;
 import org.hibernate.Session;
 import Models.Tool;
 import hibernate.dao.EquipmentEntity;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 
 public class MainFormController {
 
-    public JFXComboBox toolSelector,timeBox;
+    public JFXComboBox toolSelector,timeBox, comboBoxVidan;
     //---- table Equipment ------
     public TableColumn tableEquipmentName,tableEquipmentSerialNumber,tableEquipmentPrice4, tableEquipmentPrice8,tableEquipmentPrice24,tableEquipmentDeposit, tableEquipmentStatus;
+    public TableColumn tableSelectEquipmentName, tableSelectEquipmentRent, tableSelectEquipmentPrice, tableSelectEquipmentCommon;
     //---------------------------
-    public TreeTableColumn tableClientsFIO, tableClientsSerial, tableClientsNumber, tableClientsVidan,  tableClientsAdress, tableClientsFactAdress, tableClientsPhone;
-    public TableView tableEquipment;
+    public TableColumn tableClientsFIO, tableClientsSerial, tableClientsNumber, tableClientsVidan, tableClientsAdress, tableClientsFactAdress, tableClientsPhone;
+    public TableView tableEquipment, tableSelectEquipment, tableClients;
+    public JFXTextField labelFIO, labelSerialPass, labelNumberPass, labelPropiska, labelFactAdress, labelPhone;
+
 
     private ObservableList<ToolTableModel> tableData = FXCollections.observableArrayList();
+    private ObservableList<CustomerTableModel> tableCustomerData = FXCollections.observableArrayList();
     private ObservableList<EquipmentTableModel> tableEquipmentData = FXCollections.observableArrayList();
     private ObservableList<EquipmentEntity> data = FXCollections.observableArrayList();
     private ObservableList<String> dataComboBox = FXCollections.observableArrayList();
+
+
 
     public static class VBoxCell extends VBox {
         Label label1 = new Label();
@@ -65,7 +77,13 @@ public class MainFormController {
     private JFXListView<VBoxCell> listView;
 
     @FXML
+    private void closeAction(ActionEvent evt){
+
+    }
+
+    @FXML
     public void initialize() {
+        //---------- Table: Equipment ------------
         tableEquipmentName.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,String>("name"));
         tableEquipmentSerialNumber.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,String>("serialNumber"));
         tableEquipmentPrice4.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("priceFor4"));
@@ -73,7 +91,24 @@ public class MainFormController {
         tableEquipmentPrice24.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("priceFor24"));
         tableEquipmentDeposit.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,Integer>("deposit"));
         tableEquipmentStatus.setCellValueFactory(new PropertyValueFactory<EquipmentTableModel,String>("status"));
-        //tableTreaty.setItems(tableData);
+        //-----------------------------------------
+
+        //---------- Table: Select Equipment ---------
+        tableSelectEquipmentName.setCellValueFactory(new PropertyValueFactory<ToolTableModel,String>("Name"));
+        tableSelectEquipmentRent.setCellValueFactory(new PropertyValueFactory<ToolTableModel,String>("Period"));;
+        tableSelectEquipmentPrice.setCellValueFactory(new PropertyValueFactory<ToolTableModel,Double>("Price"));;
+        tableSelectEquipmentCommon.setCellValueFactory(new PropertyValueFactory<ToolTableModel,Double>("CommonPrice"));
+        //--------------------------------------------
+
+        //---------- Table: Clients ------------------
+        tableClientsFIO.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("fio"));
+        tableClientsSerial.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("passSerialNumber"));
+        tableClientsNumber.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("passNumber"));
+        tableClientsVidan.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("vidan"));
+        tableClientsAdress.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("adressProp"));
+        tableClientsFactAdress.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("adressFact"));
+        tableClientsPhone.setCellValueFactory(new PropertyValueFactory<CustomerTableModel,String>("phone"));
+        //--------------------------------------------
 
         timeBox.setItems(FXCollections.observableArrayList(
                 "4 часа","8 часов","1 сутки","2 суток","3 суток","4 суток","5 суток","6 суток","7 суток",
@@ -82,21 +117,20 @@ public class MainFormController {
                 "28 суток","29 суток","30 суток","31 сутrи"
         ));
         //equipmentBox.setItems(dataComboBox);
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         session.beginTransaction();
 
-        EquipmentEntity equipmentEntity = new EquipmentEntity();
+            tableEquipmentData = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());
+            tableCustomerData = FXCollections.observableArrayList(session.createCriteria(CustomerEntity.class).list());
+            data = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());;
 
-        equipmentEntity = session.load(EquipmentEntity.class,1);
-        tableEquipmentData = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());
-        data = FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).addOrder(Order.asc("name")).list());
-        //tableEquipmentData.add(new EquipmentTableModel(equipmentEntity));
-        //System.out.println(equipmentEntity.getName());
+            tableClients.setItems(tableCustomerData);
+            tableEquipment.setItems(tableEquipmentData);
+            toolSelector.setItems(FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).setProjection(Projections.property("name")).addOrder(Order.asc("name")).list()));
 
-        tableEquipment.setItems(tableEquipmentData);
-        toolSelector.setItems(FXCollections.observableArrayList(session.createCriteria(EquipmentEntity.class).setProjection(Projections.property("name")).addOrder(Order.asc("name")).list()));
         session.close();
+        //HibernateSessionFactory.shutdown();
 
         listView.getItems().add(new VBoxCell("Договор №1","Договор №2",Color.valueOf("#ff3b3b")));
     }
@@ -134,6 +168,7 @@ public class MainFormController {
         tableItem.setPrice(Math.round(tableItem.getPrice()));
         tableItem.setCommonPrice(Math.round(tableItem.getCommonPrice()));
         tableData.add(tableItem);
+        tableSelectEquipment.setItems(tableData);
 
         /*Session session = HibernateSessionFactory.getSessionFactory().openSession();
 
@@ -147,8 +182,36 @@ public class MainFormController {
 */
     }
 
+    public void addCustomerButtonAction(){
+        CustomerEntity customer = new CustomerEntity();
+        customer.setFio(labelFIO.getText());
+        customer.setPassSerialNumber(labelSerialPass.getText());
+        customer.setPassNumber(labelNumberPass.getText());
+        customer.setVidan(comboBoxVidan.getSelectionModel().getSelectedItem().toString());
+        customer.setAdressProp(labelPropiska.getText());
+        customer.setAdressFact(labelFactAdress.getText());
+        customer.setPhone(labelPhone.getText());
+        addCustomer(customer);
+    }
+
+    public void addCustomer(CustomerEntity customer) {
+        CustomerService customerService = new CustomerService();
+        customerService.persist(customer);
+    }
+
     public void getNameFromTable(){
         EquipmentTableModel equipmentTableModel = (EquipmentTableModel) tableEquipment.getSelectionModel().getSelectedItem();
         System.out.println(equipmentTableModel.getName());
+    }
+
+    public void cleanSelectetTable(){
+        tableData.clear();
+        tableSelectEquipment.setItems(tableData);
+    }
+
+    public void deleteItemFromSelectetTable(){
+        ToolTableModel tool = (ToolTableModel) tableSelectEquipment.getSelectionModel().getSelectedItem();
+        tableData.remove(tool);
+        tableSelectEquipment.setItems(tableData);
     }
 }

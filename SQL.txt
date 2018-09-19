@@ -1,11 +1,11 @@
 ﻿CREATE TABLE Customer(
        ID_Customer      INTEGER AUTO_INCREMENT PRIMARY KEY,
-       FIO			    VARCHAR(220),
+       FIO		VARCHAR(400),
        passSerialNumber VARCHAR(220),
        passNumber       VARCHAR(220),
-       vidan 	    	VARCHAR(220),
-       adressProp		VARCHAR(220),
-       adressFact 		VARCHAR(220),
+       vidan 	    	VARCHAR(550),
+       adressProp	VARCHAR(500),
+       adressFact 	VARCHAR(500),
        phone	    	VARCHAR(220)
 ) ENGINE = MYISAM;
 

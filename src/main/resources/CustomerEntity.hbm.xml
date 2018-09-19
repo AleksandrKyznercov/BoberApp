@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="hibernate.dao.CustomerEntity" table="customer" schema="bober_app_db">
+        <id name="idCustomer">
+            <column name="ID_Customer" sql-type="int(11)"/>
+        </id>
+        <property name="fio">
+            <column name="FIO" sql-type="varchar(400)" length="400" not-null="true"/>
+        </property>
+        <property name="passSerialNumber">
+            <column name="passSerialNumber" sql-type="varchar(220)" length="220" not-null="true"/>
+        </property>
+        <property name="passNumber">
+            <column name="passNumber" sql-type="varchar(220)" length="220" not-null="true"/>
+        </property>
+        <property name="vidan">
+            <column name="vidan" sql-type="varchar(550)" length="550" not-null="true"/>
+        </property>
+        <property name="adressProp">
+            <column name="adressProp" sql-type="varchar(500)" length="500" not-null="true"/>
+        </property>
+        <property name="adressFact">
+            <column name="adressFact" sql-type="varchar(500)" length="500" not-null="true"/>
+        </property>
+        <property name="phone">
+            <column name="phone" sql-type="varchar(220)" length="220" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
