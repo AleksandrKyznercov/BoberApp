@@ -32,6 +32,13 @@ public class CustomerService {
         return customer;
     }
 
+    public Customer findByNameAndPass(String id) {
+        customerDAO.openCurrentSession();
+        Customer customer = customerDAO.findById(id);
+        customerDAO.closeCurrentSession();
+        return customer;
+    }
+
     public void delete(String id) {
         customerDAO.openCurrentSessionwithTransaction();
         Customer customer = customerDAO.findById(id);

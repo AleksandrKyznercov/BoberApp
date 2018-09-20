@@ -195,6 +195,7 @@ public class MainFormController {
     }
 
     public void addCustomer(CustomerEntity customer) {
+
         CustomerService customerService = new CustomerService();
         customerService.persist(customer);
     }

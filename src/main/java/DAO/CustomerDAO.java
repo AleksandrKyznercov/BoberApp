@@ -90,6 +90,11 @@ public class CustomerDAO {
         return customer;
     }
 
+    public Customer findByNameAndPass(String id) {
+        Customer customer = (Customer) getCurrentSession().get(Customer.class, id);
+        return customer;
+    }
+
     public void delete(Customer entity) {
         getCurrentSession().delete(entity);
     }
