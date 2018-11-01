@@ -25,25 +25,33 @@ public class CustomerService {
         customerDAO.closeCurrentSessionwithTransaction();
     }
 
-    public Customer findById(String id) {
+    public CustomerEntity findById(int id) {
         customerDAO.openCurrentSession();
-        Customer customer = customerDAO.findById(id);
+        CustomerEntity customer = customerDAO.findById(id);
         customerDAO.closeCurrentSession();
         return customer;
     }
 
-    public void delete(String id) {
+
+    public int getLastID() {
+        customerDAO.openCurrentSession();
+        int lastID = customerDAO.getLastID();
+        customerDAO.closeCurrentSession();
+        return lastID;
+    }
+
+    public void delete(int id) {
         customerDAO.openCurrentSessionwithTransaction();
-        Customer customer = customerDAO.findById(id);
+        CustomerEntity customer = customerDAO.findById(id);
         customerDAO.delete(customer);
         customerDAO.closeCurrentSessionwithTransaction();
     }
 
-    public List<Customer> findAll() {
+    public List<CustomerEntity> findAll() {
         customerDAO.openCurrentSession();
-        List<Customer> books = customerDAO.findAll();
+        List<CustomerEntity> customers = customerDAO.findAll();
         customerDAO.closeCurrentSession();
-        return books;
+        return customers;
     }
 
     public void deleteAll() {
@@ -54,6 +62,10 @@ public class CustomerService {
 
     public CustomerDAO customerDAO() {
         return customerDAO;
+    }
+
+    public void close(){
+        customerDAO().finalize();
     }
 
 }

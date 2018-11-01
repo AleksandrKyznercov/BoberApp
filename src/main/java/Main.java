@@ -1,3 +1,5 @@
+import DAO.CustomerDAO;
+import DAO.CustomerService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +19,12 @@ public class Main extends Application {
         //primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @Override
+    public void stop(){
+
+        System.out.println("Stage is closing");
     }
 
 

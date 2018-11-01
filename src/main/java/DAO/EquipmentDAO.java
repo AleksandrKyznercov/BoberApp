@@ -1,17 +1,23 @@
 package DAO;
 
-import Models.Customer;
-import hibernate.dao.CustomerEntity;
+import hibernate.dao.EquipmentEntity;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Property;
+import org.hibernate.type.EntityType;
+
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class CustomerDAO {
+public class EquipmentDAO {
 
     private Session currentSession;
 
@@ -77,37 +83,50 @@ public class CustomerDAO {
         this.currentTransaction = currentTransaction;
     }
 
-    public void persist(CustomerEntity entity) {
+    public void persist(EquipmentEntity entity) {
         getCurrentSession().save(entity);
     }
 
-    public void update(CustomerEntity entity) {
+    public void update(EquipmentEntity entity) {
         getCurrentSession().update(entity);
     }
 
-    public CustomerEntity findById(int id) {
-        CustomerEntity customer = (CustomerEntity) getCurrentSession().get(CustomerEntity.class, id);
-        return customer;
+    public EquipmentEntity findById(int id) {
+        EquipmentEntity equipment = (EquipmentEntity) getCurrentSession().get(EquipmentEntity.class, id);
+        return equipment;
     }
 
-    public int getLastID() {
-        CustomerEntity customer = (CustomerEntity) getCurrentSession().createQuery("from CustomerEntity ORDER BY id DESC").setMaxResults(1).uniqueResult();
-        return customer.getIdCustomer();
+    public EquipmentEntity findByName(String name) {
+        Query query = currentSession.
+                createQuery("from EquipmentEntity where name=:name");
+        query.setParameter("name", name);
+        EquipmentEntity equipmentEntity = (EquipmentEntity) ((org.hibernate.query.Query) query).uniqueResult();
+        return equipmentEntity;
     }
 
-    public void delete(CustomerEntity entity) {
+    public void delete(EquipmentEntity entity) {
         getCurrentSession().delete(entity);
     }
 
     @SuppressWarnings("unchecked")
-    public List<CustomerEntity> findAll() {
-        List<CustomerEntity> customer = (List<CustomerEntity>) getCurrentSession().createQuery("from CustomerEntity").list();
+    public List<EquipmentEntity> findAll() {
+        List<EquipmentEntity> customer = (List<EquipmentEntity>) getCurrentSession().createQuery("from EquipmentEntity").list();
         return customer;
     }
 
+    public List<EquipmentEntity> findAllNames() {
+        CriteriaBuilder builder = currentSession.getCriteriaBuilder();
+        CriteriaQuery<EquipmentEntity> query = builder.createQuery(EquipmentEntity.class);
+        Root<EquipmentEntity> root = query.from(EquipmentEntity.class);
+        query.select(root.get("name"));
+        org.hibernate.Query<EquipmentEntity> q = currentSession.createQuery(query);
+        List<EquipmentEntity> employees = q.getResultList();
+        return employees;
+    }
+
     public void deleteAll() {
-        List<CustomerEntity> entityList = findAll();
-        for (CustomerEntity entity : entityList) {
+        List<EquipmentEntity> entityList = findAll();
+        for (EquipmentEntity entity : entityList) {
             delete(entity);
         }
     }
@@ -115,7 +134,7 @@ public class CustomerDAO {
     public void finalize () {
         /*currentTransaction.commit();
         sessionFactory.close();*/
-        System.out.println("CoustomerDAO connection close");
+        System.out.println("EquipmentDAO connection close");
         sessionFactory.close();
     }
 

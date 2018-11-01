@@ -13,7 +13,7 @@ CREATE TABLE Treaty(
        ID_Treaty        INTEGER AUTO_INCREMENT PRIMARY KEY,
        ID_Customer      INTEGER,
        Start	 	    DATE,
-       Stop	            INTEGER,
+       Stop	            DATE,
        Status			VARCHAR(20)
 ) ENGINE = MYISAM;
 

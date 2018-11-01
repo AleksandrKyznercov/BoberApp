@@ -5,8 +5,8 @@ public class ToolTableModel {
     private String Name;
     private String SerialNumber;
     private String Period;
-    private double Price;
-    private double CommonPrice;
+    private Integer Price;
+    private Integer CommonPrice;
 
     public ToolTableModel() {
         Name = null;
@@ -15,7 +15,7 @@ public class ToolTableModel {
         CommonPrice = 0;
     }
 
-    public ToolTableModel(String name, String period, double price, double commonPrice) {
+    public ToolTableModel(String name, String period, Integer price, Integer commonPrice) {
         Name = name;
         Period = period;
         Price = price;
@@ -38,19 +38,19 @@ public class ToolTableModel {
         Period = period;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return Price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         Price = price;
     }
 
-    public double getCommonPrice() {
+    public Integer getCommonPrice() {
         return CommonPrice;
     }
 
-    public void setCommonPrice(double commonPrice) {
+    public void setCommonPrice(Integer commonPrice) {
         CommonPrice = commonPrice;
     }
 }

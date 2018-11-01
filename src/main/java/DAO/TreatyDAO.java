@@ -1,17 +1,17 @@
 package DAO;
 
-import Models.Customer;
-import hibernate.dao.CustomerEntity;
+import hibernate.dao.TreatyEntity;
+import hibernate.dao.TreatyEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
+
 import java.util.List;
 
-public class CustomerDAO {
+public class TreatyDAO {
 
     private Session currentSession;
 
@@ -77,37 +77,37 @@ public class CustomerDAO {
         this.currentTransaction = currentTransaction;
     }
 
-    public void persist(CustomerEntity entity) {
+    public void persist(TreatyEntity entity) {
         getCurrentSession().save(entity);
     }
 
-    public void update(CustomerEntity entity) {
+    public void update(TreatyEntity entity) {
         getCurrentSession().update(entity);
     }
 
-    public CustomerEntity findById(int id) {
-        CustomerEntity customer = (CustomerEntity) getCurrentSession().get(CustomerEntity.class, id);
-        return customer;
+    public TreatyEntity findById(int id) {
+        TreatyEntity treaty = (TreatyEntity) getCurrentSession().get(TreatyEntity.class, id);
+        return treaty;
     }
 
     public int getLastID() {
-        CustomerEntity customer = (CustomerEntity) getCurrentSession().createQuery("from CustomerEntity ORDER BY id DESC").setMaxResults(1).uniqueResult();
-        return customer.getIdCustomer();
+        TreatyEntity treaty = (TreatyEntity) getCurrentSession().createQuery("from TreatyEntity ORDER BY id DESC").setMaxResults(1).uniqueResult();
+        return treaty.getIdTreaty();
     }
 
-    public void delete(CustomerEntity entity) {
+    public void delete(TreatyEntity entity) {
         getCurrentSession().delete(entity);
     }
 
     @SuppressWarnings("unchecked")
-    public List<CustomerEntity> findAll() {
-        List<CustomerEntity> customer = (List<CustomerEntity>) getCurrentSession().createQuery("from CustomerEntity").list();
-        return customer;
+    public List<TreatyEntity> findAll() {
+        List<TreatyEntity> treaty = (List<TreatyEntity>) getCurrentSession().createQuery("from TreatyEntity").list();
+        return treaty;
     }
 
     public void deleteAll() {
-        List<CustomerEntity> entityList = findAll();
-        for (CustomerEntity entity : entityList) {
+        List<TreatyEntity> entityList = findAll();
+        for (TreatyEntity entity : entityList) {
             delete(entity);
         }
     }
@@ -115,7 +115,7 @@ public class CustomerDAO {
     public void finalize () {
         /*currentTransaction.commit();
         sessionFactory.close();*/
-        System.out.println("CoustomerDAO connection close");
+        System.out.println("TreatyDAO connection close");
         sessionFactory.close();
     }
 

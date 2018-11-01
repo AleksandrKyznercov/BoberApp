@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="hibernate.dao.TreatyEntity" table="treaty" schema="bober_app_db">
+        <id name="idTreaty">
+            <column name="ID_Treaty" sql-type="int(11)"/>
+        </id>
+        <property name="idCustomer">
+            <column name="ID_Customer" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="start">
+            <column name="Start" sql-type="date" not-null="true"/>
+        </property>
+        <property name="stop">
+            <column name="Stop" sql-type="date" not-null="true"/>
+        </property>
+        <property name="status">
+            <column name="Status" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="commonPrice">
+            <column name="CommonPrice" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

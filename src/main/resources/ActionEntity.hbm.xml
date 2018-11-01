@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="hibernate.dao.ActionEntity" table="action" schema="bober_app_db">
+        <id name="idAction">
+            <column name="ID_Action" sql-type="int(11)"/>
+        </id>
+        <property name="idEquipment">
+            <column name="ID_Equipment" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="idTreaty">
+            <column name="ID_Treaty" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="cost">
+            <column name="Cost" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="rentTime">
+            <column name="RentTime" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
