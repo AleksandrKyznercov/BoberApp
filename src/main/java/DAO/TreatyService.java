@@ -13,49 +13,49 @@ public class TreatyService {
     }
 
     public void persist(TreatyEntity entity) {
-        treatyDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         treatyDAO.persist(entity);
-        treatyDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public void update(TreatyEntity entity) {
-        treatyDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         treatyDAO.update(entity);
-        treatyDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public TreatyEntity findById(int id) {
-        treatyDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         TreatyEntity customer = treatyDAO.findById(id);
-        treatyDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customer;
     }
 
     public int getLastID() {
-        treatyDAO().openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         int lastID = treatyDAO.getLastID();
-        treatyDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return lastID;
     }
 
     public void delete(int id) {
-        treatyDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         TreatyEntity customer = treatyDAO.findById(id);
         treatyDAO.delete(customer);
-        treatyDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public List<TreatyEntity> findAll() {
-        treatyDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         List<TreatyEntity> customers = treatyDAO.findAll();
-        treatyDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customers;
     }
 
     public void deleteAll() {
-        treatyDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         treatyDAO.deleteAll();
-        treatyDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public TreatyDAO treatyDAO() {

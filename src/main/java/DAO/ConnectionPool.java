@@ -1,7 +1,5 @@
 package DAO;
 
-import hibernate.dao.ActionEntity;
-import hibernate.dao.EquipmentEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,16 +7,25 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import javax.persistence.Query;
-import java.util.List;
+public class ConnectionPool {
+    private static ConnectionPool instance;
 
-public class ActionDAO {
+    private Session currentSession;
 
-    /*private Session currentSession;
-
-    private static SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory;
 
     private Transaction currentTransaction;
+
+    private ConnectionPool(){
+        this.sessionFactory = buildSessionFactory();
+    }
+
+    public static ConnectionPool getInstance(){ // #3
+        if(instance == null){		//если объект еще не создан
+            instance = new ConnectionPool();	//создать новый объект
+        }
+        return instance;		// вернуть ранее созданный объект
+    }
 
     public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -76,50 +83,6 @@ public class ActionDAO {
 
     public void setCurrentTransaction(Transaction currentTransaction) {
         this.currentTransaction = currentTransaction;
-    }*/
-
-    public void persist(ActionEntity entity) {
-        ConnectionPool.getInstance().getCurrentSession().save(entity);
-    }
-
-    public void update(ActionEntity entity) {
-        ConnectionPool.getInstance().getCurrentSession().update(entity);
-    }
-
-    public ActionEntity findById(int id) {
-        ActionEntity customer = (ActionEntity) ConnectionPool.getInstance().getCurrentSession().get(ActionEntity.class, id);
-        return customer;
-    }
-
-    public void delete(ActionEntity entity) {
-        ConnectionPool.getInstance().getCurrentSession().delete(entity);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<ActionEntity> findAll() {
-        List<ActionEntity> action = (List<ActionEntity>) ConnectionPool.getInstance().getCurrentSession().createQuery("from ActionEntity").list();
-        return action;
-    }
-
-    public List<ActionEntity> findAllByIDTreaty(int ID_Treaty) {
-        Query query = ConnectionPool.getInstance().getCurrentSession().createQuery("from ActionEntity where idTreaty=:idTreaty");
-        query.setParameter("idTreaty", ID_Treaty);
-        List<ActionEntity> action = (List<ActionEntity>) ((org.hibernate.query.Query) query).list();
-        return action;
-    }
-
-    public void deleteAll() {
-        List<ActionEntity> entityList = findAll();
-        for (ActionEntity entity : entityList) {
-            delete(entity);
-        }
-    }
-
-    public void finalize () {
-        /*currentTransaction.commit();
-        sessionFactory.close();*/
-        System.out.println("АctionDAO connection close");
-        ConnectionPool.getInstance().getCurrentSession().close();
     }
 
 }

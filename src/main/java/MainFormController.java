@@ -7,6 +7,7 @@ import TableModels.CustomerTableModel;
 import TableModels.EquipmentTableModel;
 import TableModels.ToolTableModel;
 import com.jfoenix.controls.*;
+import com.sun.javafx.scene.control.SelectedCellsMap;
 import hibernate.dao.ActionEntity;
 import hibernate.dao.CustomerEntity;
 import hibernate.dao.TreatyEntity;
@@ -15,20 +16,29 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import hibernate.dao.EquipmentEntity;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
 public class MainFormController {
 
     public JFXComboBox toolSelector,timeBox, comboBoxVidan;
+    public StackPane stackPane;
+    public JFXTabPane tabPane;
     //---- table Equipment ------
     public TableColumn tableEquipmentName,tableEquipmentSerialNumber,tableEquipmentPrice4, tableEquipmentPrice8,tableEquipmentPrice24,tableEquipmentDeposit, tableEquipmentStatus;
     public TableColumn tableSelectEquipmentName, tableSelectEquipmentRent, tableSelectEquipmentPrice, tableSelectEquipmentCommon;
@@ -73,7 +83,6 @@ public class MainFormController {
 
     @FXML
     public void initialize() {
-        
         customerService = new CustomerService();
         equipmentService = new EquipmentService();
         actionService = new ActionService();
@@ -125,38 +134,58 @@ public class MainFormController {
             @Override
             public void changed(ObservableValue<? extends VBoxCell> observable, VBoxCell oldTreatyBox, VBoxCell newTreatyBox) {
                 cleanActionTable();
-                List<ActionEntity> actionList =  actionService.findAllByIDTreaty(newTreatyBox.getTreatyID());
-                for (ActionEntity actionEntity: actionList) {
-                    ToolTableModel toolTableModel = new ToolTableModel();
-                    toolTableModel.setName(equipmentService.findById(actionEntity.getIdEquipment()).getName());
-                    toolTableModel.setPeriod(actionEntity.getRentTime());
+                if ((listView.getItems() != null) && (newTreatyBox != null)){
+                    List<ActionEntity> actionList = actionService.findAllByIDTreaty(newTreatyBox.getTreatyID());
+                    for (ActionEntity actionEntity : actionList) {
+                        ToolTableModel toolTableModel = new ToolTableModel();
+                        toolTableModel.setName(equipmentService.findById(actionEntity.getIdEquipment()).getName());
+                        toolTableModel.setPeriod(actionEntity.getRentTime());
                     /*if (toolTableModel.getPeriod().equals("4 часа")) {
 
                     }else if(toolTableModel.getPeriod().equals("8 часов")){
 
                     }else if(timeBox.getItems())*/
-                    //toolTableModel.setPrice(equipmentService.findById(actionEntity.getIdEquipment()).);//rerite
-                    toolTableModel.setCommonPrice(actionEntity.getCost());
-                    tableActionData.add(toolTableModel);
+                        //toolTableModel.setPrice(equipmentService.findById(actionEntity.getIdEquipment()).);//rerite
+                        toolTableModel.setCommonPrice(actionEntity.getCost());
+                        tableActionData.add(toolTableModel);
+                    }
+                    actionTable.setItems(tableActionData);
+                    System.out.println("Selected Treaty ID: " + newTreatyBox.getTreatyID());
                 }
-                actionTable.setItems(tableActionData);
-                System.out.println("Selected Treaty ID: " + newTreatyBox.getTreatyID());
             }
         });
         //----------------------------------------------
 
+        tableClients.getSelectionModel().selectedIndexProperty().addListener((observable) -> {
+            System.out.println(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getFio());
+
+        });
+
+        tableClients.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 2){
+                        moveCustomerDataFromTableCustomerToEdits();
+                    }
+                }
+            }
+        });
+
 
         tableCustomerData = FXCollections.observableArrayList(customerService.findAll());
-        tableEquipmentData = FXCollections.observableArrayList(equipmentService.findAll());
-        treatyListData = FXCollections.observableArrayList(treatyService.findAll());
         tableClients.setItems(tableCustomerData);
+
+        tableEquipmentData = FXCollections.observableArrayList(equipmentService.findAll());
         tableEquipment.setItems(tableEquipmentData);
-        //List a = FXCollections.observableArrayList(equipmentService.findAllNames());
-        toolSelector.setItems(FXCollections.observableArrayList(equipmentService.findAllNames()));
+
+        treatyListData = FXCollections.observableArrayList(treatyService.findAll());
+
         for (TreatyEntity treaty:treatyListData) {
             listView.getItems().add(new VBoxCell(treaty.getIdTreaty(),"Договор №"+treaty.getIdTreaty(),customerService.findById(treaty.getIdCustomer()).getFio(),Color.valueOf("#ff3b3b")));
         }
 
+        toolSelector.setItems(FXCollections.observableArrayList(equipmentService.findAllNames()));
     }
 
     @FXML
@@ -207,13 +236,18 @@ public class MainFormController {
         customer.setAdressProp(labelPropiska.getText().trim());
         customer.setAdressFact(labelFactAdress.getText().trim());
         customer.setPhone(labelPhone.getText().trim());
-
-        addCustomer(customer);
         //---------------------------------------------
+
         //-----------------New Treaty------------------
         TreatyEntity treatyEntity = new TreatyEntity();
 
-        treatyEntity.setIdCustomer(customerService.getLastID());
+        if (customerService.findByNameAndPass(customer.getFio(),customer.getPassSerialNumber(),customer.getPassNumber()) == null){
+            addCustomer(customer);
+            treatyEntity.setIdCustomer(customerService.getLastID());
+        }else{
+            treatyEntity.setIdCustomer(customerService.findByNameAndPass(customer.getFio(),customer.getPassSerialNumber(),customer.getPassNumber()).getIdCustomer());
+        }
+
         treatyEntity.setStart(startDate1.getValue());
         treatyEntity.setStop(endDate1.getValue());
         treatyEntity.setCommonPrice(getCommonPriceSelect());
@@ -221,6 +255,7 @@ public class MainFormController {
 
         treatyService.persist(treatyEntity);
         //---------------------------------------------
+
         //-----------------New Actions--------------
         for (ToolTableModel tableItem:tableSelectData) {
             ActionEntity actionEntity = new ActionEntity();
@@ -232,6 +267,10 @@ public class MainFormController {
             actionService.persist(actionEntity);
         }
         //---------------------------------------------
+        listViewReload(true);
+        tabPane.getSelectionModel().select(0);//select tab "Договора"
+        listView.getFocusModel().focus(0);
+        listView.getSelectionModel().selectLast();
     }
 
     public void addCustomer(CustomerEntity customer) {
@@ -275,6 +314,31 @@ public class MainFormController {
         System.out.println(equipmentTableModel.getName());
     }
 
+    public void moveCustomerDataFromTableCustomerToEdits(){
+        try{
+            labelFIO.setText(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getFio());
+            labelSerialPass.setText(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getPassSerialNumber());
+            labelNumberPass.setText(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getPassNumber());
+            if (comboBoxVidan.getItems().contains(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getVidan())){
+                //Тогда выбирать "Кто выдал" из этого же КомбоБокса
+            }else {
+                comboBoxVidan.setValue(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getVidan());
+            }
+            labelPropiska.setText(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getAdressProp());
+            labelFactAdress.setText(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getAdressFact());
+            labelPhone.setText(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getPhone());
+            tabPane.getSelectionModel().select(3);//select tab "Новый договор"
+            //System.out.println(((CustomerEntity)tableClients.getSelectionModel().getSelectedItem()).getFio());
+        }catch (Exception ex){
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("Ошибка (NullPointerException)"));
+            content.setBody(new Text("Выберите клиента! \n" +
+                    "Для выбора клиета щелкните два раза по нужной строке."));
+            JFXDialog dialog = new JFXDialog(stackPane,content, JFXDialog.DialogTransition.CENTER);
+            dialog.show();
+        }
+    }
+
     public void cleanSelectetTable(){
         tableSelectData.clear();
         tableSelectEquipment.setItems(tableSelectData);
@@ -292,6 +356,20 @@ public class MainFormController {
         tableSelectData.remove(tool);
         tableSelectEquipment.setItems(tableSelectData);
         updateCommonPriceLabelSelect();
+    }
+
+    public void listViewReload(Boolean onlyActiv){
+        treatyListData.clear();
+        listView.getItems().clear();
+        treatyListData = FXCollections.observableArrayList(treatyService.findAll());
+        for (TreatyEntity treaty:treatyListData) {
+            listView.getItems().add(new VBoxCell(treaty.getIdTreaty(),"Договор №"+treaty.getIdTreaty(),customerService.findById(treaty.getIdCustomer()).getFio(),Color.valueOf("#ff3b3b")));
+        }
+    }
+
+    public void tableClientsReload(){
+        tableCustomerData = FXCollections.observableArrayList(customerService.findAll());
+        tableClients.setItems(tableCustomerData);
     }
 
     @FXML

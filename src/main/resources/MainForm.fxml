@@ -20,242 +20,259 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" vgap="10" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFormController">
+<GridPane fx:id="gridPane" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFormController">
    <children>
-      <AnchorPane prefHeight="1235.0" prefWidth="2229.0">
+      <StackPane fx:id="stackPane" prefHeight="868.0" prefWidth="1378.0">
          <children>
-            <JFXTabPane cache="true" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <tabs>
-                <Tab text="Договора">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <SplitPane dividerPositions="0.21205007824726135" layoutX="52.0" layoutY="173.0" prefHeight="708.0" prefWidth="1029.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <JFXListView fx:id="listView" prefHeight="761.0" prefWidth="357.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <JFXCheckBox layoutX="14.0" layoutY="729.0" selected="true" text="Только текущие" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
-                                          <JFXTextField layoutX="144.0" layoutY="726.0" prefHeight="19.0" prefWidth="110.0" promptText="Поиск..." AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="144.0" />
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="706.0" prefWidth="577.0">
-                                       <children>
-                                          <TableView fx:id="actionTable" layoutX="14.0" layoutY="47.0" prefHeight="300.0" prefWidth="970.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="48.0">
-                                             <columns>
-                                                <TableColumn fx:id="actionName" maxWidth="600.0" minWidth="300.0" prefWidth="488.0" text="Инструмент" />
-                                                <TableColumn fx:id="actionPeriod" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Срок аренды" />
-                                                <TableColumn fx:id="actionPrice" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Цена" />
-                                                <TableColumn fx:id="actionCommonPrice" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Итого" />
-                                             </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                          <Label layoutX="14.0" layoutY="14.0" text="Договор №" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
-                                             <font>
-                                                <Font name="Calibri Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="commonPriceLabelActon" layoutX="888.0" layoutY="348.0" text="Итого: 0 руб." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="358.0">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Клиенты">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <SplitPane dividerPositions="0.07752956636005257" layoutX="80.0" layoutY="57.0" orientation="VERTICAL" prefHeight="763.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                       <children>
-                                          <JFXTextField fx:id="searchFIO" labelFloat="true" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="216.0" promptText="Поиск по ФИО" />
-                                          <JFXTextField fx:id="searchPhone" layoutX="260.0" layoutY="14.0" prefHeight="25.0" prefWidth="216.0" promptText="Поиск по телефону" />
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                       <children>
-                                          <TableView fx:id="tableClients" layoutX="52.0" layoutY="48.0" prefHeight="699.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <columns>
-                                              <TableColumn fx:id="tableClientsFIO" maxWidth="400.0" minWidth="274.0" prefWidth="274.0" text="ФИО" />
-                                              <TableColumn fx:id="tableClientsSerial" maxWidth="200.0" minWidth="98.0" prefWidth="133.0" text="Серия паспорта" />
-                                                <TableColumn fx:id="tableClientsNumber" maxWidth="200.0" minWidth="100.0" prefWidth="111.0" text="Номер паспорта" />
-                                                <TableColumn fx:id="tableClientsVidan" maxWidth="400.0" minWidth="100.0" prefWidth="262.0" text="Кем выдан" />
-                                                <TableColumn fx:id="tableClientsAdress" maxWidth="400.0" minWidth="128.0" prefWidth="185.0" text="Адрес прописки" />
-                                                <TableColumn fx:id="tableClientsFactAdress" maxWidth="400.0" minWidth="168.0" prefWidth="194.0" text="Фактический адрес" />
-                                                <TableColumn fx:id="tableClientsPhone" maxWidth="140.0" minWidth="62.0" prefWidth="111.0" text="Телефон" />
-                                            </columns>
-                                          </TableView>
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab text="Учет">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-                  <Tab text="Новый договор">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <SplitPane dividerPositions="0.3208137715179969" prefHeight="763.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <Label layoutX="14.0" layoutY="3.0" text="Данные клиента">
-                                             <font>
-                                                <Font name="Calibri Bold" size="18.0" />
-                                             </font></Label>
-                                          <JFXTextField fx:id="labelFIO" labelFloat="true" layoutX="14.0" layoutY="36.0" prefHeight="25.0" prefWidth="375.0" promptText="ФИО Клиента" />
-                                          <JFXTextField fx:id="labelSerialPass" labelFloat="true" layoutX="14.0" layoutY="73.0" prefHeight="25.0" prefWidth="118.0" promptText="Серия паспорта" />
-                                          <JFXTextField fx:id="labelNumberPass" labelFloat="true" layoutX="183.0" layoutY="73.0" prefHeight="25.0" prefWidth="207.0" promptText="Номер паспорта" />
-                                          <JFXComboBox fx:id="comboBoxVidan" editable="true" labelFloat="true" layoutX="14.0" layoutY="110.0" prefHeight="25.0" prefWidth="376.0" promptText="Кем выдан" />
-                                          <JFXTextField fx:id="labelPropiska" labelFloat="true" layoutX="14.0" layoutY="147.0" prefHeight="25.0" prefWidth="378.0" promptText="Адрес прописки" />
-                                          <JFXTextField fx:id="labelFactAdress" labelFloat="true" layoutX="14.0" layoutY="184.0" prefHeight="25.0" prefWidth="379.0" promptText="Фактический адрес проживания" />
-                                          <JFXTextField fx:id="labelPhone" labelFloat="true" layoutX="14.0" layoutY="221.0" prefHeight="25.0" prefWidth="161.0" promptText="Телефон для связи" />
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <JFXDatePicker fx:id="startDate1" defaultColor="#57faf6" layoutX="14.0" layoutY="33.0" prefHeight="28.0" prefWidth="196.0" promptText="Дата начала договора" />
-                                          <JFXDatePicker fx:id="endDate1" defaultColor="#57faf6" layoutX="251.0" layoutY="33.0" prefHeight="28.0" prefWidth="192.0" promptText="Дата окончания договора" />
-                                          <JFXComboBox fx:id="timeBox" labelFloat="true" layoutX="406.0" layoutY="388.0" prefHeight="25.0" prefWidth="141.0" promptText="Время аренды" />
-                                          <Label layoutX="14.0" layoutY="3.0" text="Выбор инструмента">
-                                             <font>
-                                                <Font name="Calibri Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <JFXComboBox fx:id="toolSelector" editable="true" labelFloat="true" layoutX="14.0" layoutY="388.0" prefHeight="19.0" prefWidth="362.0" promptText="Инструмент" visibleRowCount="15" />
-                                          <TableView fx:id="tableSelectEquipment" layoutX="14.0" layoutY="79.0" prefHeight="300.0" prefWidth="835.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
-                                            <columns>
-                                              <TableColumn fx:id="tableSelectEquipmentName" prefWidth="488.0" text="Инструмент" />
-                                              <TableColumn fx:id="tableSelectEquipmentRent" prefWidth="122.0" text="Срок аренды" />
-                                                <TableColumn fx:id="tableSelectEquipmentPrice" prefWidth="115.0" text="Цена" />
-                                                <TableColumn fx:id="tableSelectEquipmentCommon" prefWidth="99.0" text="Итого" />
-                                            </columns>
-                                          </TableView>
-                                          <JFXButton layoutX="728.0" layoutY="719.0" onAction="#addCustomerButtonAction" prefHeight="28.0" prefWidth="121.0" style="-fx-background-color: #379fe5;" text="Сохранить" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
-                                             <font>
-                                                <Font name="Calibri Bold" size="15.0" />
-                                             </font>
-                                             <ripplerFill>
-                                                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                                                   <stops>
-                                                      <Stop color="WHITE" />
-                                                      <Stop color="BLACK" offset="1.0" />
-                                                   </stops>
-                                                </RadialGradient>
-                                             </ripplerFill>
-
-                                          </JFXButton>
-                                          <JFXButton layoutX="577.0" layoutY="386.0" onAction="#addEquipmentInTable" prefHeight="28.0" prefWidth="121.0" style="-fx-background-color: #56dd31;" text="Добавить">
-                                             <font>
-                                                <Font name="Calibri Bold" size="15.0" />
-                                             </font>
-                                             <ripplerFill>
-                                                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                                                   <stops>
-                                                      <Stop color="WHITE" />
-                                                      <Stop color="BLACK" offset="1.0" />
-                                                   </stops>
-                                                </RadialGradient>
-                                             </ripplerFill>
-                                          </JFXButton>
-                                          <JFXButton fx:id="trashButton" contentDisplay="CENTER" ellipsisString="" layoutX="808.0" layoutY="43.0" onAction="#cleanSelectetTable" prefHeight="21.0" prefWidth="15.0" text=" " textOverrun="CLIP">
-                                              <tooltip><Tooltip text="Отчистить таблицу выбора инструмента" /></tooltip>
-                                              <graphic>
-                                                <ImageView>
-                                                   <image>
-                                                      <Image url="@img/icons8_Waste_24px.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic>
-                                             <textFill>
-                                                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                                                   <stops>
-                                                      <Stop color="#ff200c" />
-                                                      <Stop color="WHITE" offset="1.0" />
-                                                   </stops>
-                                                </RadialGradient>
-                                             </textFill>
-                                          </JFXButton>
-                                          <JFXButton fx:id="deleteButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="769.0" layoutY="43.0" onAction="#deleteItemFromSelectetTable" prefHeight="15.0" prefWidth="0.0" text=" ">
-                                              <tooltip><Tooltip text="Удалить выделенную строку из таблицы выбора инструмента" /></tooltip>
-                                              <graphic>
-                                                <ImageView>
-                                                   <image>
-                                                      <Image url="@img/icons8_Cancel_24px.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic>
-                                             <textFill>
-                                                <LinearGradient endX="1.0" endY="1.0">
-                                                   <stops>
-                                                      <Stop color="RED" />
-                                                      <Stop color="WHITE" offset="1.0" />
-                                                   </stops>
-                                                </LinearGradient>
-                                             </textFill>
-                                          </JFXButton>
-                                          <Label fx:id="commonPriceLabelSelect" layoutX="749.0" layoutY="388.0" text="Итого: 0 руб." AnchorPane.rightAnchor="14.0">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children></AnchorPane>
-                                </items>
-                              </SplitPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Инструмент">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <JFXCheckBox layoutX="1146.0" layoutY="53.0" text="Только  в аренде" />
-                              <TableView fx:id="tableEquipment" layoutX="14.0" layoutY="80.0" prefHeight="683.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
-                                 <columns>
-                                    <TableColumn fx:id="tableEquipmentName" prefWidth="341.0" text="Инструмент" />
-                                    <TableColumn fx:id="tableEquipmentSerialNumber" maxWidth="2000.0" minWidth="0.0" prefWidth="136.0" text="Серийный номер" />
-                                    <TableColumn fx:id="tableEquipmentPrice4" maxWidth="1000.0" prefWidth="75.0" text="4 часа" />
-                                    <TableColumn fx:id="tableEquipmentPrice8" maxWidth="1000.0" prefWidth="75.0" text="8 часов" />
-                                    <TableColumn fx:id="tableEquipmentPrice24" maxWidth="1000.0" prefWidth="75.0" text="1 сутки" />
-                                    <TableColumn fx:id="tableEquipmentDeposit" maxWidth="1000.0" prefWidth="75.0" text="Депозит" />
-                                    <TableColumn fx:id="tableEquipmentStatus" maxWidth="500.0" prefWidth="75.0" text="Статус" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                                 </TableView>
-                           </children></AnchorPane>
-                     </content>
-                  </Tab>
-               </tabs>
-            </JFXTabPane>
-         </children>
-      </AnchorPane>
+            <AnchorPane prefHeight="392.0" prefWidth="677.0">
+               <children>
+                  <JFXTabPane fx:id="tabPane" cache="true" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <tabs>
+                      <Tab text="Договора">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.21205007824726135" layoutX="52.0" layoutY="173.0" prefHeight="708.0" prefWidth="1029.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <JFXListView fx:id="listView" prefHeight="761.0" prefWidth="357.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <JFXCheckBox layoutX="14.0" layoutY="729.0" selected="true" text="Только текущие" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                                                <JFXTextField layoutX="144.0" layoutY="726.0" prefHeight="19.0" prefWidth="110.0" promptText="Поиск..." AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="144.0" />
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="706.0" prefWidth="577.0">
+                                             <children>
+                                                <TableView fx:id="actionTable" layoutX="14.0" layoutY="47.0" prefHeight="166.0" prefWidth="976.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="48.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="actionName" maxWidth="600.0" minWidth="300.0" prefWidth="488.0" text="Инструмент" />
+                                                      <TableColumn fx:id="actionPeriod" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Срок аренды" />
+                                                      <TableColumn fx:id="actionPrice" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Цена" />
+                                                      <TableColumn fx:id="actionCommonPrice" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Итого" />
+                                                   </columns>
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                </TableView>
+                                                <Label fx:id="treatyNumberLabel" layoutX="14.0" layoutY="14.0" text="Договор №" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="commonPriceLabelActon" layoutX="888.0" layoutY="214.0" text="Итого: 0 руб." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="214.0">
+                                                   <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="14.0" layoutY="251.0" text="Арендатор">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Клиенты">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.07752956636005257" layoutX="80.0" layoutY="57.0" orientation="VERTICAL" prefHeight="763.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                             <children>
+                                                <JFXTextField fx:id="searchFIO" labelFloat="true" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="216.0" promptText="Поиск по ФИО" />
+                                                <JFXTextField fx:id="searchPhone" layoutX="260.0" layoutY="14.0" prefHeight="25.0" prefWidth="216.0" promptText="Поиск по телефону" />
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                             <children>
+                                                <TableView fx:id="tableClients" layoutX="52.0" layoutY="48.0" prefHeight="699.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="tableClientsFIO" maxWidth="400.0" minWidth="274.0" prefWidth="274.0" text="ФИО" />
+                                                    <TableColumn fx:id="tableClientsSerial" maxWidth="200.0" minWidth="98.0" prefWidth="133.0" text="Серия паспорта" />
+                                                      <TableColumn fx:id="tableClientsNumber" maxWidth="200.0" minWidth="100.0" prefWidth="111.0" text="Номер паспорта" />
+                                                      <TableColumn fx:id="tableClientsVidan" maxWidth="400.0" minWidth="100.0" prefWidth="262.0" text="Кем выдан" />
+                                                      <TableColumn fx:id="tableClientsAdress" maxWidth="400.0" minWidth="128.0" prefWidth="185.0" text="Адрес прописки" />
+                                                      <TableColumn fx:id="tableClientsFactAdress" maxWidth="400.0" minWidth="168.0" prefWidth="194.0" text="Фактический адрес" />
+                                                      <TableColumn fx:id="tableClientsPhone" maxWidth="140.0" minWidth="62.0" prefWidth="111.0" text="Телефон" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Учет">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab text="Новый договор">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.3208137715179969" prefHeight="763.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <Label layoutX="14.0" layoutY="3.0" text="Данные клиента">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <JFXTextField fx:id="labelFIO" labelFloat="true" layoutX="14.0" layoutY="36.0" prefHeight="25.0" prefWidth="375.0" promptText="ФИО Клиента" unFocusColor="BLACK" />
+                                                <JFXTextField fx:id="labelSerialPass" labelFloat="true" layoutX="14.0" layoutY="73.0" prefHeight="25.0" prefWidth="118.0" promptText="Серия паспорта" />
+                                                <JFXTextField fx:id="labelNumberPass" labelFloat="true" layoutX="183.0" layoutY="73.0" prefHeight="25.0" prefWidth="207.0" promptText="Номер паспорта" />
+                                                <JFXComboBox fx:id="comboBoxVidan" editable="true" labelFloat="true" layoutX="14.0" layoutY="110.0" prefHeight="25.0" prefWidth="376.0" promptText="Кем выдан" />
+                                                <JFXTextField fx:id="labelPropiska" labelFloat="true" layoutX="14.0" layoutY="147.0" prefHeight="25.0" prefWidth="378.0" promptText="Адрес прописки" />
+                                                <JFXTextField fx:id="labelFactAdress" labelFloat="true" layoutX="14.0" layoutY="184.0" prefHeight="25.0" prefWidth="379.0" promptText="Фактический адрес проживания" />
+                                                <JFXTextField fx:id="labelPhone" labelFloat="true" layoutX="14.0" layoutY="221.0" prefHeight="25.0" prefWidth="161.0" promptText="Телефон для связи" />
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <JFXDatePicker fx:id="startDate1" defaultColor="#57faf6" layoutX="14.0" layoutY="33.0" prefHeight="28.0" prefWidth="196.0" promptText="Дата начала договора" />
+                                                <JFXDatePicker fx:id="endDate1" defaultColor="#57faf6" layoutX="251.0" layoutY="33.0" prefHeight="28.0" prefWidth="192.0" promptText="Дата окончания договора" />
+                                                <JFXComboBox fx:id="timeBox" labelFloat="true" layoutX="406.0" layoutY="388.0" prefHeight="25.0" prefWidth="141.0" promptText="Время аренды" />
+                                                <Label layoutX="14.0" layoutY="3.0" text="Выбор инструмента">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <JFXComboBox fx:id="toolSelector" editable="true" labelFloat="true" layoutX="14.0" layoutY="388.0" prefHeight="19.0" prefWidth="362.0" promptText="Инструмент" visibleRowCount="15" />
+                                                <TableView fx:id="tableSelectEquipment" layoutX="14.0" layoutY="79.0" prefHeight="300.0" prefWidth="835.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="tableSelectEquipmentName" prefWidth="488.0" text="Инструмент" />
+                                                    <TableColumn fx:id="tableSelectEquipmentRent" prefWidth="122.0" text="Срок аренды" />
+                                                      <TableColumn fx:id="tableSelectEquipmentPrice" prefWidth="115.0" text="Цена" />
+                                                      <TableColumn fx:id="tableSelectEquipmentCommon" prefWidth="99.0" text="Итого" />
+                                                  </columns>
+                                                </TableView>
+                                                <JFXButton layoutX="728.0" layoutY="719.0" onAction="#addCustomerButtonAction" prefHeight="28.0" prefWidth="121.0" style="-fx-background-color: #379fe5;" text="Сохранить" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="15.0" />
+                                                   </font>
+                                                   <ripplerFill>
+                                                      <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                         <stops>
+                                                            <Stop color="WHITE" />
+                                                            <Stop color="BLACK" offset="1.0" />
+                                                         </stops>
+                                                      </RadialGradient>
+                                                   </ripplerFill>
+      
+                                                </JFXButton>
+                                                <JFXButton layoutX="577.0" layoutY="386.0" onAction="#addEquipmentInTable" prefHeight="28.0" prefWidth="121.0" style="-fx-background-color: #56dd31;" text="Добавить">
+                                                   <font>
+                                                      <Font name="Calibri Bold" size="15.0" />
+                                                   </font>
+                                                   <ripplerFill>
+                                                      <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                         <stops>
+                                                            <Stop color="WHITE" />
+                                                            <Stop color="BLACK" offset="1.0" />
+                                                         </stops>
+                                                      </RadialGradient>
+                                                   </ripplerFill>
+                                                </JFXButton>
+                                                <JFXButton fx:id="trashButton" contentDisplay="CENTER" ellipsisString="" layoutX="808.0" layoutY="43.0" onAction="#cleanSelectetTable" prefHeight="21.0" prefWidth="15.0" text=" " textOverrun="CLIP">
+                                                    <tooltip>
+                                                      <Tooltip text="Отчистить таблицу выбора инструмента" />
+                                                   </tooltip>
+                                                    <graphic>
+                                                      <ImageView>
+                                                         <image>
+                                                            <Image url="@img/icons8_Waste_24px.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <textFill>
+                                                      <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                         <stops>
+                                                            <Stop color="#ff200c" />
+                                                            <Stop color="WHITE" offset="1.0" />
+                                                         </stops>
+                                                      </RadialGradient>
+                                                   </textFill>
+                                                </JFXButton>
+                                                <JFXButton fx:id="deleteButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="769.0" layoutY="43.0" onAction="#deleteItemFromSelectetTable" prefHeight="15.0" prefWidth="0.0" text=" ">
+                                                    <tooltip>
+                                                      <Tooltip text="Удалить выделенную строку из таблицы выбора инструмента" />
+                                                   </tooltip>
+                                                    <graphic>
+                                                      <ImageView>
+                                                         <image>
+                                                            <Image url="@img/icons8_Cancel_24px.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <textFill>
+                                                      <LinearGradient endX="1.0" endY="1.0">
+                                                         <stops>
+                                                            <Stop color="RED" />
+                                                            <Stop color="WHITE" offset="1.0" />
+                                                         </stops>
+                                                      </LinearGradient>
+                                                   </textFill>
+                                                </JFXButton>
+                                                <Label fx:id="commonPriceLabelSelect" layoutX="749.0" layoutY="388.0" text="Итого: 0 руб." AnchorPane.rightAnchor="14.0">
+                                                   <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Инструмент">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXCheckBox layoutX="1146.0" layoutY="53.0" text="Только  в аренде" />
+                                    <TableView fx:id="tableEquipment" layoutX="14.0" layoutY="80.0" prefHeight="683.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                                       <columns>
+                                          <TableColumn fx:id="tableEquipmentName" prefWidth="341.0" text="Инструмент" />
+                                          <TableColumn fx:id="tableEquipmentSerialNumber" maxWidth="2000.0" minWidth="0.0" prefWidth="136.0" text="Серийный номер" />
+                                          <TableColumn fx:id="tableEquipmentPrice4" maxWidth="1000.0" prefWidth="75.0" text="4 часа" />
+                                          <TableColumn fx:id="tableEquipmentPrice8" maxWidth="1000.0" prefWidth="75.0" text="8 часов" />
+                                          <TableColumn fx:id="tableEquipmentPrice24" maxWidth="1000.0" prefWidth="75.0" text="1 сутки" />
+                                          <TableColumn fx:id="tableEquipmentDeposit" maxWidth="1000.0" prefWidth="75.0" text="Депозит" />
+                                          <TableColumn fx:id="tableEquipmentStatus" maxWidth="500.0" prefWidth="75.0" text="Статус" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                       </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </JFXTabPane>
+               </children>
+            </AnchorPane>
+         </children></StackPane>
    </children>
    <columnConstraints>
       <ColumnConstraints />

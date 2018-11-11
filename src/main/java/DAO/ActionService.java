@@ -13,50 +13,50 @@ public class ActionService {
     }
 
     public void persist(ActionEntity entity) {
-        actionDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         actionDAO.persist(entity);
-        actionDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public void update(ActionEntity entity) {
-        actionDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         actionDAO.update(entity);
-        actionDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public ActionEntity findById(int id) {
-        actionDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         ActionEntity customer = actionDAO.findById(id);
-        actionDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customer;
     }
 
     public void delete(int id) {
-        actionDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         ActionEntity customer = actionDAO.findById(id);
         actionDAO.delete(customer);
-        actionDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public List<ActionEntity> findAll() {
-        actionDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         List<ActionEntity> customers = actionDAO.findAll();
-        actionDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customers;
     }
 
     public List<ActionEntity> findAllByIDTreaty(int idTreaty) {
-        actionDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         List<ActionEntity> customers = actionDAO.findAllByIDTreaty(idTreaty);
-        actionDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customers;
     }
 
 
     public void deleteAll() {
-        actionDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         actionDAO.deleteAll();
-        actionDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public ActionDAO actionDAO() {

@@ -14,50 +14,57 @@ public class CustomerService {
     }
 
     public void persist(CustomerEntity entity) {
-        customerDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         customerDAO.persist(entity);
-        customerDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public void update(CustomerEntity entity) {
-        customerDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         customerDAO.update(entity);
-        customerDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public CustomerEntity findById(int id) {
-        customerDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         CustomerEntity customer = customerDAO.findById(id);
-        customerDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
+        return customer;
+    }
+
+    public CustomerEntity findByNameAndPass(String name, String passSerialNumber, String passNumber) {
+        ConnectionPool.getInstance().openCurrentSession();
+        CustomerEntity customer = customerDAO.findByNameAndPass(name, passSerialNumber, passNumber);
+        ConnectionPool.getInstance().closeCurrentSession();
         return customer;
     }
 
 
     public int getLastID() {
-        customerDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         int lastID = customerDAO.getLastID();
-        customerDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return lastID;
     }
 
     public void delete(int id) {
-        customerDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         CustomerEntity customer = customerDAO.findById(id);
         customerDAO.delete(customer);
-        customerDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public List<CustomerEntity> findAll() {
-        customerDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         List<CustomerEntity> customers = customerDAO.findAll();
-        customerDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customers;
     }
 
     public void deleteAll() {
-        customerDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         customerDAO.deleteAll();
-        customerDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public CustomerDAO customerDAO() {

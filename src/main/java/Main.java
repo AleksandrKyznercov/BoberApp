@@ -1,5 +1,4 @@
-import DAO.CustomerDAO;
-import DAO.CustomerService;
+import DAO.ConnectionPool;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +14,7 @@ public class Main extends Application {
         //primaryStage.setTitle("Hello World");
         Scene scene = new Scene(root);
 
-
+        ConnectionPool.getInstance();
         //primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -23,7 +22,6 @@ public class Main extends Application {
 
     @Override
     public void stop(){
-
         System.out.println("Stage is closing");
     }
 

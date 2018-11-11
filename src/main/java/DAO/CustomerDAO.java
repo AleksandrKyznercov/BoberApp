@@ -9,100 +9,56 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import javax.persistence.Query;
 import java.util.List;
 
 public class CustomerDAO {
 
-    private Session currentSession;
-
-    private static SessionFactory sessionFactory = buildSessionFactory();
-
-    private Transaction currentTransaction;
-
-    public Session openCurrentSession() {
-        currentSession = getSessionFactory().openSession();
-        return currentSession;
-    }
-
-    public Session openCurrentSessionwithTransaction() {
-        currentSession = getSessionFactory().openSession();
-        currentTransaction = currentSession.beginTransaction();
-        return currentSession;
-    }
-
-    public void closeCurrentSession() {
-        currentSession.close();
-    }
-
-    public void closeCurrentSessionwithTransaction() {
-        currentTransaction.commit();
-        currentSession.close();
-    }
-
-    private static SessionFactory buildSessionFactory() {
-
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
-            StandardServiceRegistryBuilder.destroy( registry );
-
-            throw new ExceptionInInitializerError("Initial SessionFactory failed" + e);
-        }
-        return sessionFactory;
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
-
     public void persist(CustomerEntity entity) {
-        getCurrentSession().save(entity);
+        ConnectionPool.getInstance().getCurrentSession().save(entity);
     }
 
     public void update(CustomerEntity entity) {
-        getCurrentSession().update(entity);
+        ConnectionPool.getInstance().getCurrentSession().update(entity);
     }
 
     public CustomerEntity findById(int id) {
-        CustomerEntity customer = (CustomerEntity) getCurrentSession().get(CustomerEntity.class, id);
+        CustomerEntity customer = (CustomerEntity) ConnectionPool.getInstance().getCurrentSession().get(CustomerEntity.class, id);
         return customer;
     }
 
     public int getLastID() {
-        CustomerEntity customer = (CustomerEntity) getCurrentSession().createQuery("from CustomerEntity ORDER BY id DESC").setMaxResults(1).uniqueResult();
+        CustomerEntity customer = (CustomerEntity) ConnectionPool.getInstance().getCurrentSession().createQuery("from CustomerEntity ORDER BY id DESC").setMaxResults(1).uniqueResult();
         return customer.getIdCustomer();
     }
 
     public void delete(CustomerEntity entity) {
-        getCurrentSession().delete(entity);
+        ConnectionPool.getInstance().getCurrentSession().delete(entity);
     }
 
     @SuppressWarnings("unchecked")
     public List<CustomerEntity> findAll() {
-        List<CustomerEntity> customer = (List<CustomerEntity>) getCurrentSession().createQuery("from CustomerEntity").list();
+        List<CustomerEntity> customer = (List<CustomerEntity>) ConnectionPool.getInstance().getCurrentSession().createQuery("from CustomerEntity").list();
         return customer;
+    }
+
+    public CustomerEntity findByNameAndPass(String fio, String passSerial, String passNumber) {
+        try {
+            Query query = ConnectionPool.getInstance().getCurrentSession().createQuery("from CustomerEntity where fio=:fio and passSerialNumber=:passSerial and passNumber=:passNumber").setMaxResults(1);
+            query.setParameter("fio", fio);
+            query.setParameter("passSerial", passSerial);
+            query.setParameter("passNumber", passNumber);
+            CustomerEntity customerEntity = (CustomerEntity) ((org.hibernate.query.Query) query).uniqueResult();
+
+            return customerEntity;
+        }catch (NullPointerException e){
+            System.out.println("findByNameAndPass NullPointerException: " + e);
+            return null;
+        }catch (Exception e) {
+            System.out.println("findByNameAndPass exception: " + e);
+            return null;
+        }
     }
 
     public void deleteAll() {
@@ -112,11 +68,11 @@ public class CustomerDAO {
         }
     }
 
-    public void finalize () {
+    public void finalize() {
         /*currentTransaction.commit();
         sessionFactory.close();*/
         System.out.println("CoustomerDAO connection close");
-        sessionFactory.close();
+        ConnectionPool.getInstance().getSessionFactory().close();
     }
 
 }

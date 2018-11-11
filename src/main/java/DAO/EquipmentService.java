@@ -13,56 +13,56 @@ public class EquipmentService {
     }
 
     public void persist(EquipmentEntity entity) {
-        equipmentDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         equipmentDAO.persist(entity);
-        equipmentDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public void update(EquipmentEntity entity) {
-        equipmentDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         equipmentDAO.update(entity);
-        equipmentDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public EquipmentEntity findById(int id) {
-        equipmentDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         EquipmentEntity customer = equipmentDAO.findById(id);
-        equipmentDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customer;
     }
 
     public void delete(int id) {
-        equipmentDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         EquipmentEntity customer = equipmentDAO.findById(id);
         equipmentDAO.delete(customer);
-        equipmentDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public List<EquipmentEntity> findAll() {
-        equipmentDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         List<EquipmentEntity> customers = equipmentDAO.findAll();
-        equipmentDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customers;
     }
 
     public EquipmentEntity findByName(String name) {
-        equipmentDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         EquipmentEntity equipmentEntity = equipmentDAO.findByName(name);
-        equipmentDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return equipmentEntity;
     }
 
     public List<EquipmentEntity> findAllNames() {
-        equipmentDAO.openCurrentSession();
+        ConnectionPool.getInstance().openCurrentSession();
         List<EquipmentEntity> customers = equipmentDAO.findAllNames();
-        equipmentDAO.closeCurrentSession();
+        ConnectionPool.getInstance().closeCurrentSession();
         return customers;
     }
 
     public void deleteAll() {
-        equipmentDAO.openCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().openCurrentSessionwithTransaction();
         equipmentDAO.deleteAll();
-        equipmentDAO.closeCurrentSessionwithTransaction();
+        ConnectionPool.getInstance().closeCurrentSessionwithTransaction();
     }
 
     public EquipmentDAO equipmentDAO() {

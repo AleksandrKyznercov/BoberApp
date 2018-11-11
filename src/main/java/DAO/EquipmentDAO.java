@@ -19,107 +19,42 @@ import java.util.List;
 
 public class EquipmentDAO {
 
-    private Session currentSession;
-
-    private static SessionFactory sessionFactory = buildSessionFactory();
-
-    private Transaction currentTransaction;
-
-    public Session openCurrentSession() {
-        currentSession = getSessionFactory().openSession();
-        return currentSession;
-    }
-
-    public Session openCurrentSessionwithTransaction() {
-        currentSession = getSessionFactory().openSession();
-        currentTransaction = currentSession.beginTransaction();
-        return currentSession;
-    }
-
-    public void closeCurrentSession() {
-        currentSession.close();
-    }
-
-    public void closeCurrentSessionwithTransaction() {
-        currentTransaction.commit();
-        currentSession.close();
-    }
-
-    private static SessionFactory buildSessionFactory() {
-
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
-            StandardServiceRegistryBuilder.destroy( registry );
-
-            throw new ExceptionInInitializerError("Initial SessionFactory failed" + e);
-        }
-        return sessionFactory;
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
-
     public void persist(EquipmentEntity entity) {
-        getCurrentSession().save(entity);
+        ConnectionPool.getInstance().getCurrentSession().save(entity);
     }
 
     public void update(EquipmentEntity entity) {
-        getCurrentSession().update(entity);
+        ConnectionPool.getInstance().getCurrentSession().update(entity);
     }
 
     public EquipmentEntity findById(int id) {
-        EquipmentEntity equipment = (EquipmentEntity) getCurrentSession().get(EquipmentEntity.class, id);
+        EquipmentEntity equipment = (EquipmentEntity) ConnectionPool.getInstance().getCurrentSession().get(EquipmentEntity.class, id);
         return equipment;
     }
 
     public EquipmentEntity findByName(String name) {
-        Query query = currentSession.
-                createQuery("from EquipmentEntity where name=:name");
+        Query query = ConnectionPool.getInstance().getCurrentSession().createQuery("from EquipmentEntity where name=:name");
         query.setParameter("name", name);
         EquipmentEntity equipmentEntity = (EquipmentEntity) ((org.hibernate.query.Query) query).uniqueResult();
         return equipmentEntity;
     }
 
     public void delete(EquipmentEntity entity) {
-        getCurrentSession().delete(entity);
+        ConnectionPool.getInstance().getCurrentSession().delete(entity);
     }
 
     @SuppressWarnings("unchecked")
     public List<EquipmentEntity> findAll() {
-        List<EquipmentEntity> customer = (List<EquipmentEntity>) getCurrentSession().createQuery("from EquipmentEntity").list();
+        List<EquipmentEntity> customer = (List<EquipmentEntity>) ConnectionPool.getInstance().getCurrentSession().createQuery("from EquipmentEntity").list();
         return customer;
     }
 
     public List<EquipmentEntity> findAllNames() {
-        CriteriaBuilder builder = currentSession.getCriteriaBuilder();
+        CriteriaBuilder builder = ConnectionPool.getInstance().getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<EquipmentEntity> query = builder.createQuery(EquipmentEntity.class);
         Root<EquipmentEntity> root = query.from(EquipmentEntity.class);
         query.select(root.get("name"));
-        org.hibernate.Query<EquipmentEntity> q = currentSession.createQuery(query);
+        org.hibernate.Query<EquipmentEntity> q = ConnectionPool.getInstance().getCurrentSession().createQuery(query);
         List<EquipmentEntity> employees = q.getResultList();
         return employees;
     }
@@ -135,7 +70,7 @@ public class EquipmentDAO {
         /*currentTransaction.commit();
         sessionFactory.close();*/
         System.out.println("EquipmentDAO connection close");
-        sessionFactory.close();
+        ConnectionPool.getInstance().getSessionFactory().close();
     }
 
 }
